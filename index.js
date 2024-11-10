@@ -4,6 +4,7 @@ const cors = require('cors');
 app.use(cors());
 const connectDb = require('./config/mongoose')
 connectDb();
+const PORT = process.env.PORT || 10000
 const bodyParser = require('body-parser');
 require('dotenv').config();
 app.use(express.json());
@@ -15,7 +16,7 @@ app.use(express.json());
 
 app.use('/', require('./router.js'));
 
-app.listen(8050, function(err) {
+app.listen(PORT, function(err) {
     if (err) {
         console.log(err)
     } else {
