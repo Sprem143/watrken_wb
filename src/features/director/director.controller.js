@@ -1,6 +1,6 @@
 const Director = require('./director.model');
 const Student = require('../student/student.model');
-const Teacher = require('../teacher/teacher.model');
+const Supplier = require('../supplier/model')
 const Attendence = require('../student/studentAttendence.model')
 const jwt = require('jsonwebtoken');
 const SECRET_KEY = 'school';
@@ -90,7 +90,7 @@ exports.noofpresentstudent = async(req, res) => {
     try {
         const { date } = req.body;
         let result = await Attendence.where({ dateNow: date }).find();
-        let tresult = await Teacher.find();
+        let tresult = await Supplier.find();
         const r = { s: result, t: tresult };
         res.status(200).json(r);
     } catch (err) {
@@ -162,11 +162,11 @@ exports.addstudent = async(req, res) => {
     // --------add teacher------------
 exports.addteacher = async(req, res) => {
         try {
-            const newTeacher = new Teacher(req.body);
+            const newTeacher = new Supplier(req.body);
             await newTeacher.save();
-            res.status(200).json({ message: "Teacher added successfully", status: 200 })
+            res.status(200).json({ message: "Supplieradded successfully", status: 200 })
         } catch (err) {
-            res.status(201).json({ message: "Error while adding teacher" });
+            res.status(201).json({ message: "Error while adding supplier" });
         }
     }
     // ----- log out ------------
@@ -197,7 +197,7 @@ exports.getallstudents = async(req, res) => {
 }
 exports.getallteachers = async(req, res) => {
     try {
-        let teacher = await Teacher.find();
+        let teacher = await Supplier.find();
         res.status(200).json(teacher)
     } catch (err) {
         res.status(201).json({ message: "Error while getting student list" })
@@ -240,7 +240,7 @@ exports.getattendance = async(req, res) => {
 exports.getoneteacher = async(req, res) => {
     const email = req.body.email;
     try {
-        let teacher = await Teacher.findOne({ email });
+        let teacher = await Supplier.findOne({ email });
         res.status(200).json(teacher)
     } catch (err) {
         res.status(201).json({ message: "Error while getting teacher details" })
@@ -254,7 +254,7 @@ exports.searchteacher = async(req, res) => {
         return res.status(400).json({ message: 'Please enter teacher\'s name' });
     }
     try {
-        let teachers = await Teacher.find({
+        let teachers = await Supplier.find({
             username: {
                 $regex: st,
                 $options: 'i'
@@ -306,15 +306,15 @@ exports.removestudent = async(req, res) => {
 //--------remove a teacher---------
 exports.removeteacher = async(req, res) => {
     try {
-        let teacher = await Teacher.findOne(req.body);
+        let teacher = await Supplier.findOne(req.body);
         if (!teacher) {
-            return res.status(404).send("Teacher not found");
+            return res.status(404).send("Supplier not found");
         }
-        await Teacher.deleteOne(teacher);
-        res.status(200).send("Teacher removed successfully");
+        await Supplier.deleteOne(teacher);
+        res.status(200).send("Supplier removed successfully");
 
     } catch (err) {
-        res.status(201).json({ message: "Error while removing Teacher" })
+        res.status(201).json({ message: "Error while removing Supplier" })
     }
 }
 
@@ -342,7 +342,7 @@ exports.updatestudent = async(req, res) => {
 
 exports.updateteacher = async(req, res) => {
     let { Email, tName, tEmail, tMobile, tFatherName, tSubject, tGender, tAddress, tSalary } = req.body;
-    let student = await Teacher.findOne({ email: Email });
+    let student = await Supplier.findOne({ email: Email });
     if (!tName) { tName = student.username };
     if (!tEmail) { tEmail = student.email };
     if (!tMobile) { tMobile = student.mobile };
@@ -355,8 +355,8 @@ exports.updateteacher = async(req, res) => {
     const filter = { email: Email };
     const update = { username: tName, email: tEmail, mobile: tMobile, salary: tSalary, fatherName: tFatherName, gender: tGender, address: tAddress, subject: tSubject };
     try {
-        await Teacher.findOneAndUpdate(filter, update);
+        await Supplier.findOneAndUpdate(filter, update);
     } catch (err) {
-        res.status(404).json({ message: "Not found Teacher" });
+        res.status(404).json({ message: "Not found Supplier" });
     }
 }
