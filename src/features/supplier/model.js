@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const supplierSchema = mongoose.Schema({
     username: {
         type: String,
-        unique: true
+        require: true
     },
     mobile: {
         type: Number,
@@ -23,10 +23,11 @@ const supplierSchema = mongoose.Schema({
     },
     image: {
         type: String,
-        require: true
+        // require: true
     },
     document: {
-        type: String
+        type: String,
+        require: true
     },
     password: {
         type: String,

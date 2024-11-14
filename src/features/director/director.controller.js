@@ -162,10 +162,12 @@ exports.addstudent = async(req, res) => {
     // --------add teacher------------
 exports.addteacher = async(req, res) => {
         try {
+            console.log(req.body)
             const newTeacher = new Supplier(req.body);
             await newTeacher.save();
             res.status(200).json({ message: "Supplieradded successfully", status: 200 })
         } catch (err) {
+            console.log(err)
             res.status(201).json({ message: "Error while adding supplier" });
         }
     }

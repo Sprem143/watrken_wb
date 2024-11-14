@@ -5,7 +5,6 @@ app.use(cors());
 const connectDb = require('./config/mongoose')
 connectDb();
 const PORT = process.env.PORT || 10000
-const bodyParser = require('body-parser');
 require('dotenv').config();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
