@@ -53,7 +53,6 @@ exports.profile = async (req, res) => {
         try {
             const user = jwt.verify(token, secretKey);
             let profile= await Customer.findOne({mobile:user.mobile})
-            console.log(profile)
             res.status(200).send(profile);
         } catch(err) {
             res.status(401).send("Invalid token");
