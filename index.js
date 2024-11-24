@@ -1,24 +1,29 @@
-const express = require('express')
-const app = express();
+const express = require('express');
 const cors = require('cors');
-app.use(cors());
-const connectDb = require('./config/mongoose')
-connectDb();
-const PORT = process.env.PORT || 10000
-require('dotenv').config();
+const connectDB = require('./db');
+const adminRouter= require('./features/admin/router');
+const sellerRouter= require('./features/seller/router');
+const customerRouter= require('./features/customer/router')
+const nodemailer = require('nodemailer');
+
+const app = express();
+connectDB();
+
+app.use(cors({
+  origin: '*',
+  credentials: true
+}));
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }))
+app.use(express.urlencoded({ extended: true }));
+
+app.use('/admin',adminRouter);
+app.use('/seller',sellerRouter);
+app.use('/customer',customerRouter);
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
 
 
-app.use(express.json());
-// app.use(bodyParser.json());
-
-app.use('/', require('./router.js'));
-
-app.listen(PORT, function(err) {
-    if (err) {
-        console.log(err)
-    } else {
-        console.log(`Server is running on port`)
-    }
-})
+module.exports = app;
