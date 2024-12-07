@@ -6,7 +6,6 @@ const sellerRouter= require('./features/seller/router');
 const customerRouter= require('./features/customer/router');
 const orderRouter= require('./features/order/router')
 const nodemailer = require('nodemailer');
-const PORT = process.env.PORT || 10000;
 
 const app = express();
 connectDB();
@@ -23,6 +22,7 @@ app.use('/seller',sellerRouter);
 app.use('/customer',customerRouter);
 app.use('/order',orderRouter);
 
+const PORT = process.env.PORT || 10000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

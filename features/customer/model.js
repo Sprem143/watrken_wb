@@ -18,7 +18,9 @@ name:{
     type: String,
     required: true,
   },
-  pincode:Number
+  pincode:Number,
+  imgurl:String,
+  location:String
 });
 
 module.exports = mongoose.model('Customer', UserSchema);

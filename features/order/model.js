@@ -13,15 +13,20 @@ const OrderSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    pincode: Number,
+    location: String,
     time: {
-        type:String,
-        default:new Date().toLocaleString()
+        type: String,
+        default: new Date().toLocaleString()
     },
-    status:{
-        type:String,
-        default:'Unshipped'
-    }
-});
+    status: {
+        type: String,
+        default: 'Unshipped'
+    },
+    seller: {
+        type: String,
+        default: ''
+    },
+    sellerid:String
+},{timestamps:true});
 
 module.exports = mongoose.model('Order', OrderSchema);
